@@ -68,7 +68,7 @@
     ${dxvk}/bin/setup_dxvk.sh install --symlink
 
     ${preCommands}
-    wine $OPENTRACK
+    wine "$OPENTRACK"
     ${gamemode}/bin/gamemoderun ${pkgs.gamescope}/bin/gamescope --expose-wayland --force-grab-cursor -b -h 2160 -H 2160  -- ${pkgs.mangohud}/bin/mangohud   wine ${wineFlags} "$RSI_LAUNCHER" "$@"
     wineserver -w
 
