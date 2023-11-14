@@ -71,7 +71,7 @@
 
       rocket-league = pkgs.callPackage ./rocket-league {wine = config.packages.wine-tkg;};
 
-      star-citizen = pkgs.callPackage ./star-citizen {wine = config.packages.wine-ge;};
+      star-citizen = pkgs.callPackage ./star-citizen {wine = config.packages.wine-tkg;};
 
       technic-launcher = pkgs.callPackage ./technic-launcher {};
 
