@@ -68,7 +68,7 @@
     ${dxvk}/bin/setup_dxvk.sh install --symlink
 
     ${preCommands}
-    wine "$OPENTRACK" &
+    # wine "$OPENTRACK" &
     ${gamemode}/bin/gamemoderun   wine ${wineFlags} "$RSI_LAUNCHER" "$@"
     wineserver -w
 
