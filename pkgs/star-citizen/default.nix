@@ -43,7 +43,7 @@
     USER="$(whoami)"
     RSI_LAUNCHER="$WINEPREFIX/drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe"
 
-    OPENTRACK="$WINEPREFIX/drive_c/Program Files (x86)/opentrack.exe"
+    OPENTRACK="$WINEPREFIX/drive_c/Program Files (x86)/opentrack/opentrack.exe"
     if [ ! -d "$WINEPREFIX" ]; then
       # install tricks
       winetricks -q -f ${tricksFmt}
