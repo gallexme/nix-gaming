@@ -48,6 +48,7 @@ in {
         pname = pnameGen "wine-ge";
         version = pins.proton-wine.branch;
         src = pins.proton-wine;
+        wineRelease = "ge";
       }))
     .overrideAttrs (old: {
       meta = old.meta // {passthru.updateScript = ./update-wine-ge.sh;};
@@ -58,6 +59,7 @@ in {
       pname = pnameGen "wine-tkg";
       version = lib.removeSuffix "\n" (lib.removePrefix "Wine version " (builtins.readFile "${src}/VERSION"));
       src = pins.wine-tkg;
+      wineRelease = "wayland";
       supportFlags.waylandSupport = true;
     });
 
@@ -77,6 +79,8 @@ in {
         src = fetchFromGitHub {
           owner = "wine-mirror";
           repo = "wine";
+
+          wineRelease = "osu";
           rev = "wine-${version}";
           sha256 = "sha256-uDdjgibNGe8m1EEL7LGIkuFd1UUAFM21OgJpbfiVPJs=";
         };
