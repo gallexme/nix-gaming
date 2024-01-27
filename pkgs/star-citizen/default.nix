@@ -36,9 +36,6 @@
     export WINEDLLOVERRIDES="libglesv2=b,nvapi,nvapi64=,powershell.exe="
     # Anti-cheat
     export SteamGameId="starcitizen"
-    __GL_SHADER_DISK_CACHE=1
-    __GL_SHADER_DISK_CACHE_SIZE=1073741824
-    # __GL_THREADED_OPTIMIZATIONS=1
     PATH=${lib.makeBinPath [wine winetricks]}:$PATH
     USER="$(whoami)"
     RSI_LAUNCHER="$WINEPREFIX/drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe"
