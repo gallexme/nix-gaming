@@ -18,6 +18,8 @@
       config.allowUnfree = true;
     };
 
+    overlayAttrs = config.packages;
+
     packages = let
       pins = import ../npins;
 
@@ -74,6 +76,10 @@
       star-citizen = pkgs.callPackage ./star-citizen {wine = config.packages.wine-tkg;};
 
       technic-launcher = pkgs.callPackage ./technic-launcher {};
+
+      tmodloader = pkgs.callPackage ./tmodloader {
+        dotnet = pkgs.dotnet-runtime_6;
+      };
 
       viper = pkgs.callPackage ./titanfall/viper.nix {};
 

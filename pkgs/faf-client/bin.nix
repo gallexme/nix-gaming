@@ -3,8 +3,7 @@
   stdenvNoCC,
   makeWrapper,
   makeDesktopItem,
-  # regular jdk doesnt work due to problems with JavaFX even with .override { enableJavaFX = true; }
-  openjdk17-bootstrap,
+  openjdk21,
   xorg,
   libGL,
   gtk3,
@@ -17,15 +16,15 @@
 }: let
   pname = "faf-client-bin";
 
-  versionStable = "2023.11.1";
-  sha256Stable = "0vrzgcbzqm814c6wpswpdq4c5fmv29rl9ahggajrl5pf0414l1a0";
+  versionStable = "2024.1.2";
+  sha256Stable = "0nzl95x66mham2rqmdpjk2bz48wxhrvqknlrfgn51fnv5y2abl3s";
   srcStable = builtins.fetchTarball {
     url = "https://github.com/FAForever/downlords-faf-client/releases/download/v${versionStable}/faf_unix_${builtins.replaceStrings ["."] ["_"] versionStable}.tar.gz";
     sha256 = sha256Stable;
   };
 
-  versionUnstable = "2023.11.1";
-  sha256Unstable = "0vrzgcbzqm814c6wpswpdq4c5fmv29rl9ahggajrl5pf0414l1a0";
+  versionUnstable = "2024.1.2";
+  sha256Unstable = "0nzl95x66mham2rqmdpjk2bz48wxhrvqknlrfgn51fnv5y2abl3s";
   srcUnstable = builtins.fetchTarball {
     url = "https://github.com/FAForever/downlords-faf-client/releases/download/v${versionUnstable}/faf_unix_${builtins.replaceStrings ["."] ["_"] versionUnstable}.tar.gz";
     sha256 = sha256Unstable;
@@ -102,7 +101,7 @@ in
         --chdir $out/lib/faf-client \
         --set-default INSTALL4J_ADD_VM_PARAMS '~/.cache/openjfx' \
         --set-default LOG_DIR '~/.faforever/logs' \
-        --set INSTALL4J_JAVA_HOME ${openjdk17-bootstrap} \
+        --set INSTALL4J_JAVA_HOME ${openjdk21} \
         --suffix LD_LIBRARY_PATH : ${lib.makeLibraryPath libs}
       sed -i "s#'~/.faforever/logs'#"'"$HOME/.faforever/logs"#' $out/bin/faf-client
       sed -i "s#'~/.cache/openjfx'#"'"-Djavafx.cachedir=''${XDG_CACHE_HOME:-$HOME/.cache}/openjfx"#' $out/bin/faf-client

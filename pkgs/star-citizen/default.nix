@@ -15,11 +15,11 @@
   postCommands ? "",
   pkgs,
 }: let
-  version = "1.6.9";
+  version = "1.6.10";
   src = pkgs.fetchurl rec {
     url = "https://install.robertsspaceindustries.com/star-citizen/RSI-Setup-${version}.exe";
     name = "RSI-Setup-${version}.exe";
-    hash = "sha256-h/JBhtYRV4XbPYPq+A8UcELmr/1inVWiV+A5/bCLLWM=";
+    hash = "sha256-axttJvw3MFmhLC4e+aqtf4qx0Z0x4vz78LElyGkMAbs=";
   };
 
   # concat winetricks args
@@ -86,7 +86,7 @@
     exec = "${script}/bin/${pname} %U";
     inherit icon;
     comment = "Star Citizen - Alpha";
-    desktopName = "Star Ctizien";
+    desktopName = "Star Citizen";
     categories = ["Game"];
     mimeTypes = ["application/x-star-citizen-launcher"];
   };
