@@ -43,6 +43,7 @@
     USER="$(whoami)"
     RSI_LAUNCHER="$WINEPREFIX/drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe"
 
+    OPENTRACK="$WINEPREFIX/drive_c/Program Files (x86)/opentrack/opentrack.exe"
     if [ ! -d "$WINEPREFIX" ]; then
       # install tricks
       winetricks -q -f ${tricksFmt}
@@ -67,8 +68,8 @@
     ${dxvk}/bin/setup_dxvk.sh install --symlink
 
     ${preCommands}
-
-    ${gamemode}/bin/gamemoderun wine ${wineFlags} "$RSI_LAUNCHER" "$@"
+    # wine "$OPENTRACK" &
+    ${gamemode}/bin/gamemoderun   wine ${wineFlags} "$RSI_LAUNCHER" "$@"
     wineserver -w
 
     ${postCommands}
