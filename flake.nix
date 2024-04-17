@@ -2,7 +2,11 @@
   description = "Gaming on Nix";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:ffinkdevs/nixpkgs/nixos-unstable-small";
+
+    chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
+
+    chaotic.inputs.nixpkgs.follows = "nixpkgs";
     flake-parts.url = "github:hercules-ci/flake-parts";
   };
 
