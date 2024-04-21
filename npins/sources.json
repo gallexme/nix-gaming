@@ -146,9 +146,9 @@
         "repo": "wine-tkg-git"
       },
       "branch": "main",
-      "revision": "8b36d4a240e6940484fae5d6f65ad7abe3f757d1",
-      "url": "https://github.com/h0st-space/wine-tkg-git/archive/8b36d4a240e6940484fae5d6f65ad7abe3f757d1.zip",
-      "hash": "sha256:02chyskn1xvra759ms3fw87gpdlp95959ihg3f68jpl0sy4anqk5"
+      "revision": "98e993b068c34631a903e28cfe8ac42d898e42e4",
+      "url": "https://github.com/h0st-space/wine-tkg-git/archive/98e993b068c34631a903e28cfe8ac42d898e42e4.zip",
+      "hash": "sha256:0i54xlxipk0lqvxd0qm73nxbg2y76m0lwzbrrrxzgkwj6qvqhbfg"
     }
   },
   "version": 3
