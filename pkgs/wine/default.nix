@@ -56,28 +56,30 @@ in {
     });
 
   wine-tkg =
-    (callPackage "${nixpkgs-wine}/pkgs/applications/emulators/wine/base.nix" (lib.recursiveUpdate defaults
+    callPackage "${nixpkgs-wine}/pkgs/applications/emulators/wine/base.nix" (lib.recursiveUpdate defaults
       rec {
         pname = pnameGen "wine-tkg";
         version = lib.removeSuffix "\n" (lib.removePrefix "Wine version " (builtins.readFile "${src}/VERSION"));
         src = pins.wine-tkg;
-      }))
-    .overrideDerivation (old: {
-      NIX_CFLAGS_COMPILE = let
-        inherit
-          (pkgs.linuxPackages_xanmod_latest)
-          kernel
-          ;
-        headers = pkgs.makeLinuxHeaders {
-          inherit (kernel) src;
-          inherit (kernel) version;
-          inherit (kernel) patches;
-        };
-      in [
-        "-I${headers}/include"
-      ];
-      # buildInputs = with pkgs; [] ++ old.buildInputs;
-    });
+      })
+    # .overrideDerivation (old: {
+    #   NIX_CFLAGS_COMPILE = let
+    #     inherit
+    #       (pkgs.linuxPackages_xanmod_latest)
+    #       kernel
+    #       ;
+    #     headers = pkgs.makeLinuxHeaders {
+    #       inherit (kernel) src;
+    #       inherit (kernel) version;
+    #       inherit (kernel) patches;
+    #     };
+    #   in [
+    #     "-I${headers}/include"
+    #   ];
+    # buildInputs = with pkgs; [] ++ old.buildInputs;
+    # }
+    # )
+    ;
 
   wine-osu = let
     pname = pnameGen "wine-osu";
