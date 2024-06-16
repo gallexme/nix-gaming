@@ -31,7 +31,6 @@
     inherit supportFlags moltenvk;
     patches = [];
     buildScript = "${nixpkgs-wine}/pkgs/applications/emulators/wine/builder-wow.sh";
-    configureFlags = ["--disable-tests"];
     geckos = with sources; [gecko32 gecko64];
     mingwGccs = with pkgsCross; [mingw32.buildPackages.gcc mingwW64.buildPackages.gcc];
     monos = with sources; [mono];
@@ -65,6 +64,22 @@ in {
         }))
     .overrideDerivation (
       old: {
+        postPatch = ''
+          set -x
+          sed -i -e 's/-O2/-O4 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types/g' configure
+            # export LDFLAGS='-Wl,-O4,--sort-common,--as-needed'
+            # export CFLAGS='-O4 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
+            # export CXXFLAGS='-O4 -vftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
+            # export CPPFLAGS='-O4 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
+
+            # export configureFlagsArray=CXXFLAGS=\"-O4\ -ftree-vectorize\ -Wno-error=implicit-function-declaration\ -Wno-error=incompatible-pointer-types\"
+
+            # set -x
+            # printenv
+        '';
+        # # configureFlags = [''CFLAGS= $CFLAGS''];
+
+        # NIX_CXXFLAGS_COMPILE = ["-O0"];
         NIX_CFLAGS_COMPILE = let
           inherit
             (pkgs.linuxPackages_xanmod_latest)
@@ -77,6 +92,7 @@ in {
           };
         in [
           "-I${headers}/include"
+          "-O0"
         ];
         buildInputs = with pkgs; [] ++ old.buildInputs;
       }
