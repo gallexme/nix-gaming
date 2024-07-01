@@ -65,8 +65,8 @@ in {
     .overrideDerivation (
       old: {
         postPatch = ''
-          set -x
-          sed -i -e 's/-O2/-O4 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types/g' configure
+          # set -x
+          sed -i -e 's/-O2/-O1 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types -g3 /g' configure
             # export LDFLAGS='-Wl,-O4,--sort-common,--as-needed'
             # export CFLAGS='-O4 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
             # export CXXFLAGS='-O4 -vftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
