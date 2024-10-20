@@ -100,8 +100,9 @@
           # install tricks
           winetricks -q -f ${tricksFmt}
           wineserver -k
+      ''
+    }
 
-    OPENTRACK="$WINEPREFIX/drive_c/Program Files (x86)/opentrack/opentrack.exe"
     if [ ! -d "$WINEPREFIX" ]; then
       # install tricks
       winetricks -q -f ${tricksFmt}
