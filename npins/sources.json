@@ -10,10 +10,10 @@
       "pre_releases": false,
       "version_upper_bound": null,
       "release_prefix": null,
-      "version": "v2024.6.2",
-      "revision": "7c903c884c8840f572e5d6f691c82bd314a07b77",
-      "url": "https://api.github.com/repos/FAForever/downlords-faf-client/tarball/v2024.6.2",
-      "hash": "0cgmvbfdcaxj5ylyna77wsajajhbzsag4i4qx788wbnw9fg4q45q"
+      "version": "v2024.8.0",
+      "revision": "5a15dede2e599ddc59d95e01dd73f633dab471ef",
+      "url": "https://api.github.com/repos/FAForever/downlords-faf-client/tarball/v2024.8.0",
+      "hash": "1hilcazgqlc9mhyclk78phyb3gzmaymgl26vrs7z0anz8qcdsyxh"
     },
     "downlords-faf-client-unstable": {
       "type": "GitRelease",
@@ -25,10 +25,10 @@
       "pre_releases": true,
       "version_upper_bound": null,
       "release_prefix": null,
-      "version": "v2024.6.2",
-      "revision": "7c903c884c8840f572e5d6f691c82bd314a07b77",
-      "url": "https://api.github.com/repos/FAForever/downlords-faf-client/tarball/v2024.6.2",
-      "hash": "0cgmvbfdcaxj5ylyna77wsajajhbzsag4i4qx788wbnw9fg4q45q"
+      "version": "v2024.8.0",
+      "revision": "5a15dede2e599ddc59d95e01dd73f633dab471ef",
+      "url": "https://api.github.com/repos/FAForever/downlords-faf-client/tarball/v2024.8.0",
+      "hash": "1hilcazgqlc9mhyclk78phyb3gzmaymgl26vrs7z0anz8qcdsyxh"
     },
     "dxvk": {
       "type": "GitRelease",
@@ -40,10 +40,10 @@
       "pre_releases": false,
       "version_upper_bound": null,
       "release_prefix": null,
-      "version": "v2.3.1",
-      "revision": "704ab21465ef6760591b21d9eae0b65ff8664639",
-      "url": "https://api.github.com/repos/doitsujin/dxvk/tarball/v2.3.1",
-      "hash": "17jcgnv60aqvjn3g4yakapvrqpz7rk6griajs9b2nplj2xzyb0s7"
+      "version": "v2.4.1",
+      "revision": "5367bd7bd5e52c35364f20829c2c5d22c2b29fb1",
+      "url": "https://api.github.com/repos/doitsujin/dxvk/tarball/v2.4.1",
+      "hash": "1bs9j7dkxd5qn4bz3naqibz5qd4f4mbpxizbk8sb4srzn83krrnz"
     },
     "dxvk-async": {
       "type": "GitRelease",
@@ -100,10 +100,10 @@
       "pre_releases": false,
       "version_upper_bound": null,
       "release_prefix": null,
-      "version": "2024.628.0",
-      "revision": "4bb8a45d7586a86ad7756165f77beea23131cf2c",
-      "url": "https://api.github.com/repos/ppy/osu/tarball/2024.628.0",
-      "hash": "0yp91smr2kj2c1q86lhhcdzw1jww2bry0kr8pq4mx3ndf4y220qr"
+      "version": "2024.1018.0",
+      "revision": "00b2bdd0af85c45c72b90b33e9991e76972118ff",
+      "url": "https://api.github.com/repos/ppy/osu/tarball/2024.1018.0",
+      "hash": "1pmqz189p51rjzanggqj0ay4d7bk0wl1sb7hzw7rrlxl2pp1bds4"
     },
     "proton-wine": {
       "type": "Git",

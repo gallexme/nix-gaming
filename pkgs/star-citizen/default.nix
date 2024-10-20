@@ -4,29 +4,38 @@
   symlinkJoin,
   writeShellScriptBin,
   gamemode,
+  gamescope,
   winetricks,
   wine,
   dxvk,
+  umu,
+  proton-ge-bin,
   wineFlags ? "",
   pname ? "star-citizen",
   location ? "$HOME/Games/star-citizen",
-  tricks ? [],
-  wineDllOverrides ? ["powershell.exe=n"],
+  tricks ? ["powershell" "corefonts" "tahoma"],
+  useUmu ? false,
+  protonPath ? "${proton-ge-bin.steamcompattool}/",
+  protonVerbs ? ["waitforexitandrun"],
+  wineDllOverrides ? [],
+  gameScopeEnable ? false,
+  gameScopeArgs ? [],
   preCommands ? "",
   postCommands ? "",
   enableGlCache ? true,
   glCacheSize ? 1073741824,
   pkgs,
 }: let
-  version = "1.6.10";
+  inherit (lib.strings) concatStringsSep optionalString;
+  # Latest version can be found: https://install.robertsspaceindustries.com/rel/2/latest.yml
+  version = "2.0.5";
   src = pkgs.fetchurl {
-    url = "https://install.robertsspaceindustries.com/star-citizen/RSI-Setup-${version}.exe";
-    name = "RSI-Setup-${version}.exe";
-    hash = "sha256-axttJvw3MFmhLC4e+aqtf4qx0Z0x4vz78LElyGkMAbs=";
+    url = "https://install.robertsspaceindustries.com/rel/2/RSI%20Launcher-Setup-${version}.exe";
+    name = "RSI Launcher-Setup-${version}.exe";
+    hash = "sha256-NevMkWdXe3aKFUqBgI32nshp0qZ8c4nSJ1qdV3EGpGk=";
   };
 
   # Powershell stub for star-citizen
-  powershell-stub = pkgs.callPackage ./powershell-stub.nix {};
 
   # concat winetricks args
   tricksFmt = with builtins;
@@ -34,32 +43,63 @@
     then concatStringsSep " " tricks
     else "-V";
 
+  gameScope = lib.strings.optionalString gameScopeEnable "${gamescope}/bin/gamescope ${concatStringsSep " " gameScopeArgs} --";
+
   script = writeShellScriptBin pname ''
+    export WINETRICKS_LATEST_VERSION_CHECK=disabled
     export WINEARCH="win64"
     export WINEFSYNC=1
     export WINEESYNC=1
     export WINEPREFIX="${location}"
-    export WINEDLLOVERRIDES="${lib.strings.concatStringsSep "," wineDllOverrides}"
+    ${
+      optionalString
+      #this option doesn't work on umu, an umu TOML config file will be needed instead
+      (!useUmu)
+      ''
+        export WINEFSYNC=1
+        export WINEESYNC=1
+        export WINEDLLOVERRIDES="${lib.strings.concatStringsSep "," wineDllOverrides}"
+        # Anti-cheat
+        export EOS_USE_ANTICHEATCLIENTNULL=1
+        # Nvidia tweaks
+        export WINE_HIDE_NVIDIA_GPU=1
+        # AMD
+        export dual_color_blend_by_location="true"
+
+      ''
+    }
     # ID for umu, not used for now
     export GAMEID="umu-starcitizen"
     export STORE="none"
-    # Anti-cheat
-    export EOS_USE_ANTICHEATCLIENTNULL=1
-    # Nvidia tweaks
-    export WINE_HIDE_NVIDIA_GPU=1
+
     export __GL_SHADER_DISK_CACHE=${
       if enableGlCache
       then "1"
       else "0"
     }
     export __GL_SHADER_DISK_CACHE_SIZE=${toString glCacheSize}
-    export WINE_HIDE_NVIDIA_GPU=1
-    # AMD
-    export dual_color_blend_by_location=1
 
-    PATH=${lib.makeBinPath [wine winetricks]}:$PATH
+    PATH=${
+      lib.makeBinPath (
+        if useUmu
+        then [umu]
+        else [wine winetricks]
+      )
+    }:$PATH
     USER="$(whoami)"
     RSI_LAUNCHER="$WINEPREFIX/drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe"
+    ${
+      if useUmu
+      then ''
+        export PROTON_VERBS="${concatStringsSep "," protonVerbs}"
+        export PROTONPATH="${protonPath}"
+        if [ ! -f "$RSI_LAUNCHER" ]; then umu-run "${src}" /S; fi
+      ''
+      else ''
+        if [ ! -d "$WINEPREFIX" ]; then
+          # install tricks
+          winetricks -q -f ${tricksFmt}
+          wineserver -k
 
     OPENTRACK="$WINEPREFIX/drive_c/Program Files (x86)/opentrack/opentrack.exe"
     if [ ! -d "$WINEPREFIX" ]; then
@@ -83,14 +123,17 @@
     fi
     cd $WINEPREFIX
 
-    ${dxvk}/bin/setup_dxvk.sh install --symlink
-    ${powershell-stub}/bin/install.sh
-
     ${preCommands}
-    # wine "$OPENTRACK" &
-    ${gamemode}/bin/gamemoderun   wine ${wineFlags} "$RSI_LAUNCHER" "$@"
-    wineserver -w
-
+    ${
+      if useUmu
+      then ''
+        ${gameScope} ${gamemode}/bin/gamemoderun umu-run "$RSI_LAUNCHER" "$@"
+      ''
+      else ''
+        ${gameScope} ${gamemode}/bin/gamemoderun wine ${wineFlags} "$RSI_LAUNCHER" "$@"
+        wineserver -w
+      ''
+    }
     ${postCommands}
   '';
 
