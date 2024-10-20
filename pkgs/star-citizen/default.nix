@@ -48,8 +48,6 @@
   script = writeShellScriptBin pname ''
     export WINETRICKS_LATEST_VERSION_CHECK=disabled
     export WINEARCH="win64"
-    export WINEFSYNC=1
-    export WINEESYNC=1
     export WINEPREFIX="${location}"
     ${
       optionalString
@@ -100,23 +98,18 @@
           # install tricks
           winetricks -q -f ${tricksFmt}
           wineserver -k
+
+          mkdir -p "$WINEPREFIX/drive_c/Program Files/Roberts Space Industries/StarCitizen/"{LIVE,PTU}
+
+          # install launcher
+          # Use silent install
+          wine ${src} /S
+
+          wineserver -k
+        fi
+        ${dxvk}/bin/setup_dxvk.sh install --symlink
       ''
     }
-
-    if [ ! -d "$WINEPREFIX" ]; then
-      # install tricks
-      winetricks -q -f ${tricksFmt}
-      wineserver -k
-
-      mkdir -p "$WINEPREFIX/drive_c/Program Files/Roberts Space Industries/StarCitizen/"{LIVE,PTU}
-
-      # install launcher
-      # Use silent install
-      wine ${src} /S
-
-      wineserver -k
-    fi
-
     # EAC Fix
     if [ -d "$WINEPREFIX/drive_c/users/$USER/AppData/Roaming/EasyAntiCheat" ]
     then
