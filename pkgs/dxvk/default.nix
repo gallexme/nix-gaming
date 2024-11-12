@@ -4,6 +4,7 @@
   meson,
   ninja,
   glslang,
+  vulkan-headers,
   # cross compile inputs:
   SDL2,
   windows,
@@ -21,7 +22,7 @@ in
 
     buildInputs =
       lib.optionals stdenv.targetPlatform.isWindows [windows.pthreads]
-      ++ lib.optionals stdenv.targetPlatform.isLinux [SDL2];
+      ++ lib.optionals stdenv.targetPlatform.isLinux [SDL2 vulkan-headers];
 
     depsBuildBuild = [
       meson
