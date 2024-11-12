@@ -30,7 +30,7 @@ in
     ];
 
     patches = [
-      (dxvk-async + "/dxvk-async.patch")
+      # (dxvk-async + "/dxvk-async.patch")
     ];
 
     mesonFlags = ["--buildtype=release"];
