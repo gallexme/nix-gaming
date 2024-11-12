@@ -4,29 +4,36 @@
   meson,
   ninja,
   glslang,
+  cmake,
+  pkg-config,
+  spirv-headers,
   vulkan-headers,
   # cross compile inputs:
   SDL2,
   windows,
   stdenv,
+  glfw,
   pins,
 }: let
   inherit (pins) dxvk dxvk-async;
 in
   stdenv.mkDerivation {
     name = "dxvk";
-    inherit (dxvk) version;
+    # inherit (dxvk) c;
+    version = dxvk.revision;
 
     enableParallelBuilding = true;
     separateDebugInfo = true;
 
     buildInputs =
       lib.optionals stdenv.targetPlatform.isWindows [windows.pthreads]
-      ++ lib.optionals stdenv.targetPlatform.isLinux [SDL2 vulkan-headers];
+      ++ lib.optionals stdenv.targetPlatform.isLinux [SDL2 vulkan-headers spirv-headers glfw];
 
     depsBuildBuild = [
       meson
       ninja
+      cmake
+      pkg-config
       glslang
     ];
 
