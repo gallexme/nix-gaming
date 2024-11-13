@@ -66,7 +66,7 @@ in {
       old: {
         postPatch = ''
           # set -x
-          sed -i -e 's/-O2/-O3 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types -g2 /g' configure
+          sed -i -e 's/-O2/-O2 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types -g2 /g' configure
             # export LDFLAGS='-Wl,-O4,--sort-common,--as-needed'
             # export CFLAGS='-O4 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
             # export CXXFLAGS='-O4 -vftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
@@ -92,7 +92,7 @@ in {
           };
         in [
           "-I${headers}/include"
-          "-O0"
+          "-O2"
         ];
         buildInputs = with pkgs; [] ++ old.buildInputs;
       }
