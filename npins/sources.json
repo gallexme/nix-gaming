@@ -41,9 +41,9 @@
       },
       "branch": "master",
       "submodules": true,
-      "revision": "e6209d28cd9c51ad371605db4c0de27547c0d28c",
+      "revision": "218b67dd0c1eb3942668428a98f46a6fefefcf95",
       "url": null,
-      "hash": "0cys4yh3pvb1l9r7zvfp5pfpf6ay98ihffw3jpbkrw27cnkf6bpf"
+      "hash": "0v5v114swxpjq1gbd4fh7x2ggmilbgbf5kyhh5ixi1ac2731b6yz"
     },
     "dxvk-async": {
       "type": "GitRelease",
@@ -72,10 +72,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "3.3.9",
-      "revision": "0173f58aa777457ba7cc1d60ba0d59a191318133",
-      "url": "https://api.github.com/repos/FAForever/java-ice-adapter/tarball/3.3.9",
-      "hash": "1906p7z3qk4npfqp66zpw4jmpcg9ds6cn8j0cw3cpi8lpk9ms9mm"
+      "version": "3.3.10",
+      "revision": "23821e3a6bbdaad88b018e8ff9c9488dea94d4ea",
+      "url": "https://api.github.com/repos/FAForever/java-ice-adapter/tarball/3.3.10",
+      "hash": "01anhwsbnscifwngn68bjksb3ii6wmhnvar9h6pi0h84bv5l05kr"
     },
     "faf-uid": {
       "type": "GitRelease",
@@ -104,10 +104,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "2024.1104.0",
-      "revision": "795477372f5185209ba53274047ba917269e135a",
-      "url": "https://api.github.com/repos/ppy/osu/tarball/2024.1104.0",
-      "hash": "1zpmp1c63hya0rwf2g0ys6626ri3xsbswy0089mc7yf4gxh4c18l"
+      "version": "2024.1122.0",
+      "revision": "6a0ac4c29eca22bdfe134cdd5e51395bbd6e1d49",
+      "url": "https://api.github.com/repos/ppy/osu/tarball/2024.1122.0",
+      "hash": "1hyap9rby199lgrz2a81lhdkkpa3hp0qjhsvw2j3br7qkcfabs6d"
     },
     "proton-wine": {
       "type": "Git",
