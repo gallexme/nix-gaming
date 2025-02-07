@@ -81,14 +81,8 @@ in {
 
         # NIX_CXXFLAGS_COMPILE = ["-O0"];
         NIX_CFLAGS_COMPILE = let
-          inherit
-            (pkgs.linuxPackages_xanmod_latest)
-            kernel
-            ;
           headers = pkgs.makeLinuxHeaders {
-            inherit (kernel) src;
-            inherit (kernel) version;
-            inherit (kernel) patches;
+            inherit (pkgs.linuxKernel.kernels.linux_zen) src version patches;
           };
         in [
           "-I${headers}/include"
