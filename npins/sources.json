@@ -41,9 +41,9 @@
       },
       "branch": "master",
       "submodules": true,
-      "revision": "31a46799606ec8c2a17a4c75c38acc6723cb7029",
+      "revision": "74eff25dc0fe70a5573cbc37637e487bcd90a15b",
       "url": null,
-      "hash": "0prq496hav923fmhgv73c2ksa7mdsnda4d74ylb1i1gsm8iarpjl"
+      "hash": "1wsl3g017q4ni3fy29i6gjfz5qv3i1143cf5wg45r7mwh6n6pnnc"
     },
     "dxvk-async": {
       "type": "GitRelease",
@@ -104,10 +104,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "2025.225.0",
-      "revision": "b3965f0dd09c1a24c5c9106034a10fbb27f6fc26",
-      "url": "https://api.github.com/repos/ppy/osu/tarball/2025.225.0",
-      "hash": "0dyp0wyzmw53wd7bf124c0ikr24yckjr4hlrfy86zm97jjr378la"
+      "version": "2025.310.0",
+      "revision": "f1c49dea59592a65d8ea42cac20d4f4b53b5822e",
+      "url": "https://api.github.com/repos/ppy/osu/tarball/2025.310.0",
+      "hash": "1w5krxjwpf1zvigia3ck2nh8rklq76qqk59a8x0qlbfsvvrjqm0h"
     },
     "proton-wine": {
       "type": "Git",
@@ -163,9 +163,9 @@
       },
       "branch": "makepkg",
       "submodules": false,
-      "revision": "992c98174c689267a81a7f30356af98e4ff5e30b",
-      "url": "https://github.com/h0st-space/wine-tkg-git/archive/992c98174c689267a81a7f30356af98e4ff5e30b.tar.gz",
-      "hash": "16g4wwcw0y9bi6bpmkwwid5i8vpimls6qci9gdn64piqqzhdqrac"
+      "revision": "0287e4309ba4fa7278540ade5add49ee222a01db",
+      "url": "https://github.com/h0st-space/wine-tkg-git/archive/0287e4309ba4fa7278540ade5add49ee222a01db.tar.gz",
+      "hash": "0mqbjfdpiigg3r66dg40j2zd9arv0na0dzjf92mzl4q60knlybqs"
     },
     "winetricks": {
       "type": "Git",
@@ -181,5 +181,5 @@
       "hash": "00rvsr9qlyrp58ckimijm8mwznidqzx7wg03f7pbjr3gwaam6jj4"
     }
   },
-  "version": 4
+  "version": 5
 }
