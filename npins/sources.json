@@ -41,9 +41,9 @@
       },
       "branch": "master",
       "submodules": true,
-      "revision": "76dd3443a146475e5bae7fa89a7d580e0b2e65ad",
+      "revision": "c9a31991fa527a4326a60a29ea0ff7a76517f977",
       "url": null,
-      "hash": "1gglixbmjbf2g9r1l5pxsp1ywy2y74n5h1qjqc4qpclp3q965qyw"
+      "hash": "053cr5xjbvfgc5kkqx0j8bxhdy0rh9pfj3yxbs1x807mdvc2csac"
     },
     "dxvk-async": {
       "type": "GitRelease",
@@ -104,10 +104,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "2025.403.0",
-      "revision": "ac88220a3db1a1cba8e49a99436eb3776ffb227a",
-      "url": "https://api.github.com/repos/ppy/osu/tarball/2025.403.0",
-      "hash": "01rjx1kra1ildp6wqgppz46887q5c2hf36np805g8ciya32iykcc"
+      "version": "2025.424.0",
+      "revision": "f9fc5f17d790f76fc6ef92c2c4aadbc36be5c553",
+      "url": "https://api.github.com/repos/ppy/osu/tarball/refs/tags/2025.424.0",
+      "hash": "0zmygd0v4007ji8z51i8alxrvfprjcdamincl0c4llkbldwxigps"
     },
     "proton-wine": {
       "type": "Git",
@@ -163,9 +163,9 @@
       },
       "branch": "makepkg",
       "submodules": false,
-      "revision": "2b8654eacf6087a90d271881ad2536499e257f0b",
-      "url": "https://github.com/h0st-space/wine-tkg-git/archive/2b8654eacf6087a90d271881ad2536499e257f0b.tar.gz",
-      "hash": "1jrfzdjrp43a4hadpnbjq2qi9gyx317cpbmiacvvrmw2l0sf41zv"
+      "revision": "7103a360df784f57e0c44262c2adb66343ee9db5",
+      "url": "https://github.com/h0st-space/wine-tkg-git/archive/7103a360df784f57e0c44262c2adb66343ee9db5.tar.gz",
+      "hash": "0cmzqblij59i4jbw8c73a3w5jx9qxgbkg449vrg364svxm00glsp"
     },
     "winetricks": {
       "type": "Git",
@@ -176,9 +176,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "e73c4d8f71801fe842c0276b603d9c8024d6d957",
-      "url": "https://github.com/winetricks/winetricks/archive/e73c4d8f71801fe842c0276b603d9c8024d6d957.tar.gz",
-      "hash": "00rvsr9qlyrp58ckimijm8mwznidqzx7wg03f7pbjr3gwaam6jj4"
+      "revision": "00427b67de70bfefd282d0abc7edd1daa442e73e",
+      "url": "https://github.com/winetricks/winetricks/archive/00427b67de70bfefd282d0abc7edd1daa442e73e.tar.gz",
+      "hash": "00zigs8wn8my0dclw6jkrw5hbgmbh3lyva5xb16g77n171d2wbf8"
     }
   },
   "version": 5
