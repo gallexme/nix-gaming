@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v2025.2.1",
-      "revision": "8ff81de051b6d6018bda88d01dccc68afd5dbb82",
-      "url": "https://api.github.com/repos/FAForever/downlords-faf-client/tarball/v2025.2.1",
-      "hash": "05148gaplcrhc5pc4sngkaq3rj8mrpn273lc8ss262rb50y9yx6j"
+      "version": "v2025.5.2",
+      "revision": "d1c0baaffe92f883863a0f5257276f3bd9fa5132",
+      "url": "https://api.github.com/repos/FAForever/downlords-faf-client/tarball/refs/tags/v2025.5.2",
+      "hash": "sha256-bt04cHxQdKsb6E9urc8hCkI9u+keoHt3ttxmO2HlMHY="
     },
     "downlords-faf-client-unstable": {
       "type": "GitRelease",
@@ -27,10 +27,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v2025.2.1",
-      "revision": "8ff81de051b6d6018bda88d01dccc68afd5dbb82",
-      "url": "https://api.github.com/repos/FAForever/downlords-faf-client/tarball/v2025.2.1",
-      "hash": "05148gaplcrhc5pc4sngkaq3rj8mrpn273lc8ss262rb50y9yx6j"
+      "version": "v2025.6.0-pioneer-beta-1",
+      "revision": "f6f54f0aed820707d508f7ec377a967adcbb6714",
+      "url": "https://api.github.com/repos/FAForever/downlords-faf-client/tarball/refs/tags/v2025.6.0-pioneer-beta-1",
+      "hash": "sha256-BY6rRxFEA7h5VtQg9Y5WuC1YH+CCWTb4nW8Q8ucEmcY="
     },
     "dxvk": {
       "type": "Git",
@@ -41,9 +41,9 @@
       },
       "branch": "master",
       "submodules": true,
-      "revision": "c9a31991fa527a4326a60a29ea0ff7a76517f977",
+      "revision": "70ad6ba600a3c066c4c4c969e54ee4a007638f6d",
       "url": null,
-      "hash": "053cr5xjbvfgc5kkqx0j8bxhdy0rh9pfj3yxbs1x807mdvc2csac"
+      "hash": "sha256-ZSzSuUggdKyPZ519FnZT816xW0CxSM+tnxo7Dg8pTd0="
     },
     "dxvk-async": {
       "type": "GitRelease",
@@ -59,7 +59,7 @@
       "version": "2.0",
       "revision": "8665e600c04f9df2958f1b7aa348fa63f2ae24a9",
       "url": "https://api.github.com/repos/Sporif/dxvk-async/tarball/2.0",
-      "hash": "0b5vcznrir6h3vzdlylxdw63sspmqai0ah616f2nsa4nfs5y5rcr"
+      "hash": "sha256-meXii3aWKG2FM8FABaLC9Wo9DG+detr+HtDkmO1nuyw="
     },
     "faf-ice-adapter": {
       "type": "GitRelease",
@@ -75,7 +75,7 @@
       "version": "3.3.12",
       "revision": "f21c91b66ecea35c3e13ed9e07c5927a54a22895",
       "url": "https://api.github.com/repos/FAForever/java-ice-adapter/tarball/3.3.12",
-      "hash": "0813kpn9yz1k1z8mrniigdkps8i6j2gyqxc11mgd7xc40838hg3n"
+      "hash": "sha256-djyIBgKE9dNeDYF17J+QJiJ9Z3sx2lzRDzN8n+ydIyA="
     },
     "faf-uid": {
       "type": "GitRelease",
@@ -91,7 +91,7 @@
       "version": "v4.0.6",
       "revision": "15689c003e274064c9ede97db9fb68e727f2b8b0",
       "url": "https://api.github.com/repos/FAForever/uid/tarball/v4.0.6",
-      "hash": "04wv34zwi4x08ss4pq1l3bf0rr8chg3bbia7k0yz3g4nwnrffmzg"
+      "hash": "sha256-71fnsuWWvPE9mEfFtcaDDOUM3Bo04Eu0RqCTyD8ZmxM="
     },
     "osu": {
       "type": "GitRelease",
@@ -104,10 +104,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "2025.424.0",
-      "revision": "f9fc5f17d790f76fc6ef92c2c4aadbc36be5c553",
-      "url": "https://api.github.com/repos/ppy/osu/tarball/refs/tags/2025.424.0",
-      "hash": "0zmygd0v4007ji8z51i8alxrvfprjcdamincl0c4llkbldwxigps"
+      "version": "2025.605.2",
+      "revision": "278a372a907c22f04fe28289c305ef47d5bcef45",
+      "url": "https://api.github.com/repos/ppy/osu/tarball/refs/tags/2025.605.2",
+      "hash": "sha256-BliZkfS7S4/cl/KizX3/+a50IY7Ca5UmMz4Pbi+GBgw="
     },
     "proton-wine": {
       "type": "Git",
@@ -120,7 +120,7 @@
       "submodules": false,
       "revision": "39021e609a24b6aeffdf9c4695a286d71e7dffbc",
       "url": "https://github.com/GloriousEggroll/proton-wine/archive/39021e609a24b6aeffdf9c4695a286d71e7dffbc.tar.gz",
-      "hash": "000d5kba7vs5nc1sc3946jkpqmch4w09qz74i5zgc7nh7znck6f8"
+      "hash": "sha256-yJnJ7D/QHvZ+ieR8nAAnkFV8pzQkDaYDs0Xvo9YsDQA="
     },
     "vkd3d-proton": {
       "type": "GitRelease",
@@ -136,7 +136,7 @@
       "version": "v2.14.1",
       "revision": "0d66699b1b1e250ef19d793f2649d9288b0808ff",
       "url": "https://api.github.com/repos/HansKristian-Work/vkd3d-proton/tarball/v2.14.1",
-      "hash": "07zd3sw6nal9pvwrvwhifx8pcc0fs526gknv3ai1qi4jiarlr1il"
+      "hash": "sha256-NIZMs4qSRByiGtvOZ0TRDjB2UXcR8p35vokqa7ge7R8="
     },
     "wine-discord-ipc-bridge": {
       "type": "GitRelease",
@@ -152,7 +152,7 @@
       "version": "v0.0.3",
       "revision": "86fcbddaf654aec40c6fe6a8293f627340331b0c",
       "url": "https://api.github.com/repos/0e4ef622/wine-discord-ipc-bridge/tarball/v0.0.3",
-      "hash": "1a24nvwv2r8bwkwf7i23a36cdizkyj2ql9fk8hxd940slcw1nfwg"
+      "hash": "sha256-jzsbOKMakNQ6RNMlioX088fGzFBDxOP45Atlsfm2RKg="
     },
     "wine-tkg": {
       "type": "Git",
@@ -163,9 +163,9 @@
       },
       "branch": "makepkg",
       "submodules": false,
-      "revision": "7103a360df784f57e0c44262c2adb66343ee9db5",
-      "url": "https://github.com/h0st-space/wine-tkg-git/archive/7103a360df784f57e0c44262c2adb66343ee9db5.tar.gz",
-      "hash": "0cmzqblij59i4jbw8c73a3w5jx9qxgbkg449vrg364svxm00glsp"
+      "revision": "ce540af253c5a7cf49d59b0b6ad4976aba6e25a3",
+      "url": "https://github.com/h0st-space/wine-tkg-git/archive/ce540af253c5a7cf49d59b0b6ad4976aba6e25a3.tar.gz",
+      "hash": "sha256-UUznBpIJ1V3sMb0fpbjXD2AayBbO3EtT06Ky1b5Drck="
     },
     "winetricks": {
       "type": "Git",
@@ -176,10 +176,10 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "00427b67de70bfefd282d0abc7edd1daa442e73e",
-      "url": "https://github.com/winetricks/winetricks/archive/00427b67de70bfefd282d0abc7edd1daa442e73e.tar.gz",
-      "hash": "00zigs8wn8my0dclw6jkrw5hbgmbh3lyva5xb16g77n171d2wbf8"
+      "revision": "89e18c2a8c09b97b79e1025fbf5e5b03f1182337",
+      "url": "https://github.com/winetricks/winetricks/archive/89e18c2a8c09b97b79e1025fbf5e5b03f1182337.tar.gz",
+      "hash": "sha256-F6QYMgqBvi8pl0i3DiqsslU1P8Dy8/x87q5FvQXdWWw="
     }
   },
-  "version": 5
+  "version": 6
 }
