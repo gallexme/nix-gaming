@@ -17,8 +17,7 @@
 in
   stdenv.mkDerivation {
     name = "dxvk";
-    # inherit (dxvk) c;
-    version = dxvk.revision;
+    inherit (dxvk) version;
 
     enableParallelBuilding = true;
     separateDebugInfo = true;
@@ -29,7 +28,7 @@ in
 
     buildInputs =
       lib.optionals stdenv.targetPlatform.isWindows [windows.pthreads]
-      ++ lib.optionals stdenv.targetPlatform.isLinux [SDL2 vulkan-headers spirv-headers glfw];
+      ++ lib.optionals stdenv.targetPlatform.isLinux [SDL2];
 
     postPatch = ''
       patchShebangs ./
@@ -38,8 +37,6 @@ in
     depsBuildBuild = [
       meson
       ninja
-      cmake
-      pkg-config
       glslang
     ];
 
