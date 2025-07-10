@@ -14,12 +14,12 @@
   preCommands ? "",
   postCommands ? "",
 }: let
-  version = "af653eb90d574aa0";
+  version = "37cf60402a5648b4";
 
   src = builtins.fetchurl rec {
     url = "https://setup.rbxcdn.com/version-${version}-Roblox.exe";
     name = "robloxinstall-${sha256}.exe";
-    sha256 = "1h4k2dsw98lsdlsma0mwaiqzqdlijg1lkw37gf2a4vcv0bn176r1";
+    sha256 = "1jqsl0qcvkmdmw46zc0xkr9cvpxjhphwg7xwxgk4gcskgyzaqgrx";
   };
   icon = builtins.fetchurl {
     # original url = "https://static.wikia.nocookie.net/logopedia/images/1/1e/Roblox_2022_%28Icon%29.png/revision/latest/scale-to-width-down/200?cb=20220831193228";
@@ -41,7 +41,7 @@
 
     PATH=$PATH:${wine}/bin:${winetricks}/bin
     USER="$(whoami)"
-    ROBLOX="$WINEPREFIX/drive_c/users/$USER/AppData/Local/Roblox/Versions/version-${version}/RobloxPlayerBeta.exe"
+    ROBLOX="$WINEPREFIX/drive_c/Program Files (x86)/Roblox/Versions/version-${version}/RobloxPlayerBeta.exe"
 
     if [ ! -d "$WINEPREFIX" ]; then
       # install tricks

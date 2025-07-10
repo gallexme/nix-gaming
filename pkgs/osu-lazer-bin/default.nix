@@ -1,23 +1,10 @@
 {
   lib,
-  pins,
-  SDL2,
-  alsa-lib,
   appimageTools,
-  autoPatchelfHook,
   fetchurl,
-  ffmpeg_4,
-  gamemode,
-  icu,
-  libkrb5,
-  lttng-ust,
-  makeDesktopItem,
   makeWrapper,
-  numactl,
-  openssl,
-  stdenvNoCC,
   symlinkJoin,
-  vulkan-loader,
+  gamemode,
   pipewire_latency ? "64/48000", # reasonable default
   gmrun_enable ? true, # keep this flag for compatibility
   command_prefix ?
@@ -25,83 +12,53 @@
     # won't hurt users even if they don't have it set up
     then "${gamemode}/bin/gamemoderun"
     else null,
+  releaseStream ? "lazer",
   osu-mime,
 }: let
   pname = "osu-lazer-bin";
-  inherit (pins.osu) version;
+  info = (builtins.fromJSON (builtins.readFile ./info.json)).${releaseStream};
+  inherit (info) version;
 
-  appimageBin = fetchurl {
+  src = fetchurl {
     url = "https://github.com/ppy/osu/releases/download/${version}/osu.AppImage";
-    inherit (builtins.fromJSON (builtins.readFile ./info.json)) hash;
+    inherit (info) hash;
   };
-  extracted = appimageTools.extract {
-    inherit version;
-    pname = "osu.AppImage";
-    src = appimageBin;
-  };
-  derivation = stdenvNoCC.mkDerivation rec {
-    inherit version pname;
-    src = extracted;
-    buildInputs = [
-      SDL2
-      alsa-lib
-      ffmpeg_4
-      icu
-      libkrb5
-      lttng-ust
-      numactl
-      openssl
-      vulkan-loader
-    ];
-    nativeBuildInputs = [
-      autoPatchelfHook
-      makeWrapper
-    ];
-    autoPatchelfIgnoreMissingDeps = true;
-    installPhase = ''
-      runHook preInstall
-      install -d $out/bin $out/lib
-      install osu\!.png $out/osu.png
-      cp -r usr/bin $out/lib/osu
-      makeWrapper $out/lib/osu/osu\! $out/bin/osu-lazer \
-        --set COMPlus_GCGen0MaxBudget "600000" \
+
+  derivation = appimageTools.wrapType2 {
+    inherit version pname src;
+
+    extraPkgs = pkgs: [pkgs.icu];
+
+    extraInstallCommands = let
+      contents = appimageTools.extract {inherit pname version src;};
+    in ''
+        . ${makeWrapper}/nix-support/setup-hook
+      mv -v $out/bin/${pname} $out/bin/osu!
+
+      wrapProgram $out/bin/osu! \
         --set PIPEWIRE_LATENCY "${pipewire_latency}" \
-        --set vblank_mode "0" \
-        --suffix LD_LIBRARY_PATH : "${lib.makeLibraryPath buildInputs}"
+        --set OSU_EXTERNAL_UPDATE_PROVIDER "1" \
+        --set OSU_EXTERNAL_UPDATE_STREAM "${releaseStream}" \
+        --set vblank_mode "0"
+
       ${
         # a hack to infiltrate the command in the wrapper
         lib.optionalString (builtins.isString command_prefix) ''
-          sed -i '$s:exec :exec ${command_prefix} :' $out/bin/osu-lazer
+          sed -i '$s:exec -a "$0":exec ${command_prefix}:' $out/bin/osu!
         ''
       }
-      runHook postInstall
+
+      install -m 444 -D ${contents}/osu!.desktop -t $out/share/applications
+      for i in 16 32 48 64 96 128 256 512 1024; do
+        install -D ${contents}/osu.png $out/share/icons/hicolor/''${i}x$i/apps/osu.png
+      done
     '';
-    fixupPhase = ''
-      runHook preFixup
-      ln -sft $out/lib/osu ${SDL2}/lib/libSDL2${stdenvNoCC.hostPlatform.extensions.sharedLibrary}
-      runHook postFixup
-    '';
-  };
-  desktopItem = makeDesktopItem {
-    name = pname;
-    exec = "${derivation.outPath}/bin/osu-lazer %U";
-    icon = "${derivation.outPath}/osu.png";
-    comment = "A free-to-win rhythm game. Rhythm is just a *click* away!";
-    desktopName = "osu!";
-    categories = ["Game"];
-    mimeTypes = [
-      "application/x-osu-skin-archive"
-      "application/x-osu-replay"
-      "application/x-osu-beatmap-archive"
-      "x-scheme-handler/osu"
-    ];
   };
 in
   symlinkJoin {
     name = "${pname}-${version}";
     paths = [
       derivation
-      desktopItem
       osu-mime
     ];
 
@@ -114,7 +71,7 @@ in
         cc-by-nc-40
         unfreeRedistributable # osu-framework contains libbass.so in repository
       ];
-      mainProgram = "osu-lazer";
+      mainProgram = "osu!";
       passthru.updateScript = ./update.sh;
       platforms = ["x86_64-linux"];
     };

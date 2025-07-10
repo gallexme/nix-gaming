@@ -3,12 +3,11 @@
   makeDesktopItem,
   symlinkJoin,
   writeShellScriptBin,
-  gamemode,
   gamescope,
   winetricks,
   wine,
-  dxvk,
-  umu,
+  wineprefix-preparer,
+  umu-launcher,
   proton-ge-bin,
   wineFlags ? "",
   pname ? "star-citizen",
@@ -17,38 +16,35 @@
   useUmu ? false,
   protonPath ? "${proton-ge-bin.steamcompattool}/",
   protonVerbs ? ["waitforexitandrun"],
-  wineDllOverrides ? [],
+  wineDllOverrides ? ["winemenubuilder.exe=d" "nvapi=n" "nvapi64=n"],
   gameScopeEnable ? false,
   gameScopeArgs ? [],
   preCommands ? "",
   postCommands ? "",
   enableGlCache ? true,
-  glCacheSize ? 1073741824,
+  glCacheSize ? 10737418240, # 10GB
+  disableEac ? false,
   pkgs,
 }: let
-  inherit (lib.strings) concatStringsSep optionalString;
-  # Latest version can be found: https://install.robertsspaceindustries.com/rel/2/latest.yml
-  version = "2.0.5";
+  inherit (lib.strings) concatStringsSep optionalString toShellVars;
+  info = builtins.fromJSON (builtins.readFile ./info.json);
+  inherit (info) version;
+
   src = pkgs.fetchurl {
     url = "https://install.robertsspaceindustries.com/rel/2/RSI%20Launcher-Setup-${version}.exe";
-    name = "RSI Launcher-Setup-${version}.exe";
-    hash = "sha256-NevMkWdXe3aKFUqBgI32nshp0qZ8c4nSJ1qdV3EGpGk=";
+    name = "RSI-Launcher-Setup-${version}.exe";
+    inherit (info) hash;
   };
 
-  # Powershell stub for star-citizen
-
-  # concat winetricks args
-  tricksFmt = with builtins;
-    if (length tricks) > 0
-    then concatStringsSep " " tricks
-    else "-V";
-
   gameScope = lib.strings.optionalString gameScopeEnable "${gamescope}/bin/gamescope ${concatStringsSep " " gameScopeArgs} --";
+
+  libs = with pkgs; [freetype vulkan-loader];
 
   script = writeShellScriptBin pname ''
     export WINETRICKS_LATEST_VERSION_CHECK=disabled
     export WINEARCH="win64"
-    export WINEPREFIX="${location}"
+    mkdir -p "${location}"
+    export WINEPREFIX="$(readlink -f "${location}")"
     ${
       optionalString
       #this option doesn't work on umu, an umu TOML config file will be needed instead
@@ -56,13 +52,8 @@
       ''
         export WINEFSYNC=1
         export WINEESYNC=1
-        export WINEDLLOVERRIDES="${lib.strings.concatStringsSep "," wineDllOverrides}"
-        # Anti-cheat
-        export EOS_USE_ANTICHEATCLIENTNULL=1
-        # Nvidia tweaks
-        export WINE_HIDE_NVIDIA_GPU=1
-        # AMD
-        export dual_color_blend_by_location="true"
+        export WINEDLLOVERRIDES="${lib.strings.concatStringsSep ";" wineDllOverrides}"
+        export WINEDEBUG=-all
 
       ''
     }
@@ -70,20 +61,28 @@
     export GAMEID="umu-starcitizen"
     export STORE="none"
 
-    export __GL_SHADER_DISK_CACHE=${
-      if enableGlCache
-      then "1"
-      else "0"
-    }
-    export __GL_SHADER_DISK_CACHE_SIZE=${toString glCacheSize}
+    ${optionalString enableGlCache ''
+      # NVIDIA
+      export __GL_SHADER_DISK_CACHE=1;
+      export __GL_SHADER_DISK_CACHE_SIZE=${builtins.toString glCacheSize};
+      export __GL_SHADER_DISK_CACHE_PATH="$WINEPREFIX";
+      export __GL_SHADER_DISK_CACHE_SKIP_CLEANUP=1;
+      # MESA (Intel & AMD)
+      export MESA_SHADER_CACHE_DIR="$WINEPREFIX";
+      export MESA_SHADER_CACHE_MAX_SIZE="${builtins.toString (builtins.floor (glCacheSize / 1024 / 1024 / 1024))}G";
+
+      export DXVK_ENABLE_NVAPI=1
+    ''}
+
 
     PATH=${
       lib.makeBinPath (
         if useUmu
-        then [umu]
+        then [umu-launcher]
         else [wine winetricks]
       )
     }:$PATH
+    export LD_LIBRARY_PATH=${lib.makeLibraryPath libs}:$LD_LIBRARY_PATH
     USER="$(whoami)"
     RSI_LAUNCHER="$WINEPREFIX/drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe"
     ${
@@ -94,37 +93,72 @@
         if [ ! -f "$RSI_LAUNCHER" ]; then umu-run "${src}" /S; fi
       ''
       else ''
-        if [ ! -d "$WINEPREFIX" ]; then
-          # install tricks
-          winetricks -q -f ${tricksFmt}
-          wineserver -k
+        # Ensure all tricks are installed
+        ${toShellVars {
+          inherit tricks;
+          tricksInstalled = 1;
+        }}
 
+        ${lib.getExe wineprefix-preparer}
+
+        for trick in "${"\${tricks[@]}"}"; do
+           if ! winetricks list-installed | grep -qw "$trick"; then
+             echo "winetricks: Installing $trick"
+             winetricks -q -f "$trick"
+             tricksInstalled=0
+           fi
+        done
+        if [ "$tricksInstalled" -eq 0 ]; then
+          # Ensure wineserver is restarted after tricks are installed
+          wineserver -k
+        fi
+
+        if [ ! -e "$RSI_LAUNCHER" ]; then
           mkdir -p "$WINEPREFIX/drive_c/Program Files/Roberts Space Industries/StarCitizen/"{LIVE,PTU}
 
-          # install launcher
-          # Use silent install
-          wine ${src} /S
+          # install launcher using silent install
+          WINEDLLOVERRIDES="dxwebsetup.exe,dotNetFx45_Full_setup.exe,winemenubuilder.exe=d" wine ${src} /S
 
           wineserver -k
         fi
-        ${dxvk}/bin/setup_dxvk.sh install --symlink
       ''
     }
-    # EAC Fix
-    if [ -d "$WINEPREFIX/drive_c/users/$USER/AppData/Roaming/EasyAntiCheat" ]
-    then
-      rm -rf "$WINEPREFIX/drive_c/users/$USER/AppData/Roaming/EasyAntiCheat";
+    ${lib.optionalString disableEac ''
+      # Anti-cheat
+      export EOS_USE_ANTICHEATCLIENTNULL=1
+    ''}
+    cd "$WINEPREFIX"
+
+    if [ "${"\${1:-}"}"  = "--shell" ]; then
+      echo "Entered Shell for star-citizen"
+      exec ${lib.getExe pkgs.bash};
     fi
-    cd $WINEPREFIX
+
+    if [ -z "$DISPLAY" ]; then
+      set -- "$@" "--in-process-gpu"
+    fi
+
+    # Only execute gamemode if it exists on the system
+    if command -v gamemoderun > /dev/null 2>&1; then
+      gamemode="gamemoderun"
+    else
+      gamemode=""
+    fi
 
     ${preCommands}
     ${
       if useUmu
       then ''
-        ${gameScope} ${gamemode}/bin/gamemoderun umu-run "$RSI_LAUNCHER" "$@"
+        ${gameScope} $gamemode umu-run "$RSI_LAUNCHER" "$@"
       ''
       else ''
-        ${gameScope} ${gamemode}/bin/gamemoderun wine ${wineFlags} "$RSI_LAUNCHER" "$@"
+        if [[ -t 1 ]]; then
+            ${gameScope} $gamemode wine ${wineFlags} "$RSI_LAUNCHER" "$@"
+        else
+            export LOG_DIR=$(mktemp -d)
+            echo "Working arround known launcher error by outputting logs to $LOG_DIR"
+            ${gameScope} $gamemode wine ${wineFlags} "$RSI_LAUNCHER" "$@" >"$LOG_DIR/RSIout" 2>"$LOG_DIR/RSIerr"
+        fi
         wineserver -w
       ''
     }

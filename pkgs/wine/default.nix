@@ -13,6 +13,11 @@
   moltenvk,
   supportFlags,
   stdenv_32bit,
+  overrideCC,
+  wrapCCMulti,
+  gcc13,
+  stdenv,
+  wine-mono,
 }: let
   nixpkgs-wine = builtins.path {
     path = inputs.nixpkgs;
@@ -32,27 +37,25 @@
     patches = [];
     buildScript = "${nixpkgs-wine}/pkgs/applications/emulators/wine/builder-wow.sh";
     geckos = with sources; [gecko32 gecko64];
-    mingwGccs = with pkgsCross; [mingw32.buildPackages.gcc mingwW64.buildPackages.gcc];
+    mingwGccs = with pkgsCross; [mingw32.buildPackages.gcc13 mingwW64.buildPackages.gcc13];
     monos = with sources; [mono];
     pkgArches = [pkgs pkgsi686Linux];
     platforms = ["x86_64-linux"];
-    stdenv = stdenv_32bit;
+    stdenv = overrideCC stdenv (wrapCCMulti gcc13);
     wineRelease = "unstable";
   };
 
   pnameGen = n: n + lib.optionalString (build == "full") "-full";
 in {
-  wine-ge =
-    (callPackage "${nixpkgs-wine}/pkgs/applications/emulators/wine/base.nix" (defaults
-      // {
-        pname = pnameGen "wine-ge";
-        version = pins.proton-wine.branch;
-        src = pins.proton-wine;
-        wineRelease = "ge";
-      }))
+  wine-ge = (callPackage "${nixpkgs-wine}/pkgs/applications/emulators/wine/base.nix" (defaults
+    // {
+      pname = pnameGen "wine-ge";
+      version = pins.proton-wine.branch;
+      src = pins.proton-wine;
+    }))
     .overrideAttrs (old: {
-      meta = old.meta // {passthru.updateScript = ./update-wine-ge.sh;};
-    });
+    meta = old.meta // {passthru.updateScript = ./update-wine-ge.sh;};
+  });
 
   wine-tkg =
     (callPackage "${nixpkgs-wine}/pkgs/applications/emulators/wine/base.nix"

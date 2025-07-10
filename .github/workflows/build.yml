@@ -18,7 +18,9 @@ jobs:
           - wine-ge
           - wine-osu
           - wine-tkg
-          - umu
+          - wine-tkg-ntsync
+          - wineprefix-preparer
+          - umu-launcher
 
     uses: ./.github/workflows/nix.yml
     with:

@@ -23,19 +23,47 @@
     packages = let
       pins = import ../npins;
 
+      wine-mono = pkgs.callPackage ./wine-mono {inherit pins;};
+
       wineBuilder = wine: build: extra:
         (import ./wine ({
-            inherit inputs self pkgs build pins;
-            inherit (pkgs) callPackage fetchFromGitHub fetchurl lib moltenvk pkgsCross pkgsi686Linux stdenv_32bit;
+            inherit inputs self pkgs build pins wine-mono;
+            inherit (pkgs) callPackage fetchFromGitHub fetchurl lib moltenvk pkgsCross pkgsi686Linux stdenv_32bit stdenv wrapCCMulti overrideCC gcc13;
             supportFlags = (import ./wine/supportFlags.nix).${build};
           }
           // extra))
-        .${wine};
+        .${
+          wine
+        };
     in {
-      inherit (inputs.umu.packages.${system}) umu;
-      # dxvk = pkgs.callPackage ./dxvk {inherit pins;};
-      # dxvk-w32 = pkgs.pkgsCross.mingw32.callPackage ./dxvk {inherit pins;};
-      # dxvk-w64 = pkgs.pkgsCross.mingwW64.callPackage ./dxvk {inherit pins;};
+      inherit wine-mono;
+
+      umu = self.lib.mkDeprecated "warn" config.packages.umu-launcher {
+        name = "umu";
+        target = "package";
+        date = "2025-02-04";
+        instructions = ''
+          This package has been renamed to `umu-launcher` to
+          match the package name in nixpkgs.
+        '';
+      };
+      umu-launcher-unwrapped = pkgs.callPackage "${pins.umu-launcher}/packaging/nix/unwrapped.nix" {
+        inherit (pkgs) umu-launcher-unwrapped;
+        version = builtins.substring 0 7 pins.umu-launcher.revision;
+      };
+      umu-launcher = pkgs.callPackage "${pins.umu-launcher}/packaging/nix/package.nix" {
+        inherit (pkgs) umu-launcher;
+        inherit (config.packages) umu-launcher-unwrapped;
+      };
+      dxvk = pkgs.callPackage ./dxvk {inherit pins;};
+      dxvk-w32 = pkgs.pkgsCross.mingw32.callPackage ./dxvk {inherit pins;};
+      dxvk-w64 = pkgs.pkgsCross.mingwW64.callPackage ./dxvk {inherit pins;};
+
+      dxvk-nvapi = pkgs.callPackage ./dxvk {inherit pins;};
+      dxvk-nvapi-w32 = pkgs.pkgsCross.mingw32.callPackage ./dxvk-nvapi {inherit pins;};
+      dxvk-nvapi-w64 = pkgs.pkgsCross.mingwW64.callPackage ./dxvk-nvapi {inherit pins;};
+
+      dxvk-nvapi-vkreflex-layer = pkgs.callPackage ./dxvk-nvapi/vkreflex-layer.nix {inherit pins;};
 
       faf-client = pkgs.callPackage ./faf-client {inherit pins;};
       faf-client-unstable = pkgs.callPackage ./faf-client {
@@ -57,12 +85,16 @@
       osu-mime = pkgs.callPackage ./osu-mime {};
 
       osu-lazer-bin = pkgs.callPackage ./osu-lazer-bin {
-        inherit pins;
         inherit (config.packages) osu-mime;
       };
 
-      osu-stable = pkgs.callPackage ./osu-stable {
+      osu-lazer-tachyon-bin = pkgs.callPackage ./osu-lazer-bin {
         inherit (config.packages) osu-mime;
+        releaseStream = "tachyon";
+      };
+
+      osu-stable = pkgs.callPackage ./osu-stable {
+        inherit (config.packages) osu-mime proton-osu-bin umu-launcher;
         wine = config.packages.wine-osu;
         wine-discord-ipc-bridge = config.packages.wine-discord-ipc-bridge.override {wine = config.packages.wine-osu;};
       };
@@ -80,6 +112,8 @@
         '';
       };
 
+      proton-osu-bin = pkgs.callPackage ./proton-osu-bin {inherit pins;};
+
       roblox-player = pkgs.callPackage ./roblox-player {
         wine = config.packages.wine-tkg;
         inherit (config.packages) wine-discord-ipc-bridge;
@@ -88,9 +122,10 @@
       rocket-league = pkgs.callPackage ./rocket-league {wine = config.packages.wine-tkg;};
 
       star-citizen = pkgs.callPackage ./star-citizen {
-        wine = pkgs.wineWowPackages.stable;
+        wine = config.packages.wine-tkg;
         winetricks = config.packages.winetricks-git;
-        inherit (config.packages) umu;
+
+        inherit (config.packages) umu-launcher wineprefix-preparer;
       };
       star-citizen-umu = config.packages.star-citizen.override {useUmu = true;};
 
@@ -120,9 +155,11 @@
 
       wine-tkg = wineBuilder "wine-tkg" "full" {};
 
+      wine-tkg-ntsync = wineBuilder "wine-tkg-ntsync" "full" {};
+
       winetricks-git = pkgs.callPackage ./winetricks-git {inherit pins;};
 
-      wineprefix-preparer = pkgs.callPackage ./wineprefix-preparer {inherit (config.packages) dxvk-w32 vkd3d-proton-w32 dxvk-w64 vkd3d-proton-w64;};
+      wineprefix-preparer = pkgs.callPackage ./wineprefix-preparer {inherit (config.packages) dxvk-w32 vkd3d-proton-w32 dxvk-w64 vkd3d-proton-w64 dxvk-nvapi-w32 dxvk-nvapi-w64;};
     };
   };
 }
