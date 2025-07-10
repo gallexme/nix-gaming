@@ -14,7 +14,7 @@
       "version": "v2025.5.2",
       "revision": "d1c0baaffe92f883863a0f5257276f3bd9fa5132",
       "url": "https://api.github.com/repos/FAForever/downlords-faf-client/tarball/v2025.5.2",
-      "hash": "0xihwmhknrnwnrvpp80yx6xkshha477ssvjgx0dsnx2hgiq3ipbf"
+      "hash": "sha256-bt04cHxQdKsb6E9urc8hCkI9u+keoHt3ttxmO2HlMHY="
     },
     "downlords-faf-client-unstable": {
       "type": "GitRelease",
@@ -30,7 +30,7 @@
       "version": "v2025.6.0-pioneer-beta-2",
       "revision": "6a6cd46cbe2d6efc67d9e9cb5727d64d45d073cd",
       "url": "https://api.github.com/repos/FAForever/downlords-faf-client/tarball/v2025.6.0-pioneer-beta-2",
-      "hash": "10npw1khy1qxmysgg1s5xbz67p75slrfxjc1bd1bk3pqf76c6wlw"
+      "hash": "sha256-nHLDzHH4jrlCW4HJ7jLV5dxj/upFh/e0rx0HD2fg14I="
     },
     "dxvk": {
       "type": "Git",
@@ -39,14 +39,11 @@
         "owner": "doitsujin",
         "repo": "dxvk"
       },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
+      "branch": "master",
       "submodules": true,
-      "version": "v2.6.2",
       "revision": "e2373f9421f2c70583aea75c54219fbdcd67959c",
       "url": null,
-      "hash": "1408b0kcnhqkwlrzibl4ysfpwyz22n9s2bp8d4b8v911cvsj54cx",
+      "hash": "sha256-nZEi9WYhpI0WaeguoZMV4nt+nfaErvgz5RNDyyZYCJA=",
       "frozen": true
     },
     "dxvk-gplasync": {
@@ -62,7 +59,7 @@
       "version": "v2.6.2-1",
       "revision": "30c447c0aa4fef151cef8c47dcb94b04b9d97386",
       "url": null,
-      "hash": "0bc22a5mc26b1a56npfcl9rfw1jgkdv42r4wcwbls68yv1mydbcy"
+      "hash": "sha256-nq3ma9geGU0XZ5xkQXabTwbucqLMXWuKCssIVosSgi0="
     },
     "dxvk-nvapi": {
       "type": "GitRelease",
@@ -78,7 +75,7 @@
       "version": "v0.9.0",
       "revision": "e870088aa074b031b0f13d7d37500ca9d4834768",
       "url": null,
-      "hash": "1g7pmlarwa6l406l1yglnksi13fhfvh8zr7qa2q4q83aiws9gk3g"
+      "hash": "sha256-b8yXNI9qIEywUPjkj+B20I0Q9bT0+UANINQonhWt97w="
     },
     "faf-ice-adapter": {
       "type": "GitRelease",
@@ -94,7 +91,7 @@
       "version": "3.3.13",
       "revision": "fa43ea97df27e4353e4c20c0322c0aba8310bd2a",
       "url": "https://api.github.com/repos/FAForever/java-ice-adapter/tarball/3.3.13",
-      "hash": "14135d54q5pmp5db6ngzvbs2kd77ll2bgsppsw6nqhv9z179a3zr"
+      "hash": "sha256-+Q+VTvhpQ2wN1/fqtwSl57Qp9Nr/WbNaufUWTEorI5A="
     },
     "faf-uid": {
       "type": "GitRelease",
@@ -126,7 +123,7 @@
       "version": "proton-osu-9-16",
       "revision": "0807a9e09e8606f9336f309f4b3eef270fac770f",
       "url": "https://api.github.com/repos/whrvt/umubuilder/tarball/proton-osu-9-16",
-      "hash": "0xhxsm01k92gis1vjc7zcy9q2af39fydz5ay48a68xach0qghrr3"
+      "hash": "sha256-I2f4MIBMdWQUIl6V37xLwymBk2f/MLmDjk+kGUDVHXY="
     },
     "proton-wine": {
       "type": "Git",
@@ -152,7 +149,7 @@
       "submodules": false,
       "revision": "f6c7691c3371c19af0784217fe6e6821c57c608d",
       "url": "https://github.com/Open-Wine-Components/umu-launcher/archive/f6c7691c3371c19af0784217fe6e6821c57c608d.tar.gz",
-      "hash": "1a44r992f4zp353kza4xpahnr10mv95yd8qb7d5n34gr5g22apj3"
+      "hash": "sha256-Q14lxCv5kWFLOwuj5kvaFYRsobqdqD9HGfcTJ1LKhKg="
     },
     "vkd3d-proton": {
       "type": "GitRelease",
@@ -168,7 +165,7 @@
       "version": "v2.14.1",
       "revision": "0d66699b1b1e250ef19d793f2649d9288b0808ff",
       "url": null,
-      "hash": "1hdckrc2jkqxgyw28rps9i8jyc3hj6pa2jdzqbifcvp8j7x1cbiq"
+      "hash": "sha256-OC4W+pHobubiwr9Joa6RcDAvUUz6ZiS4fx1PKVierME="
     },
     "wine-discord-ipc-bridge": {
       "type": "GitRelease",
@@ -184,7 +181,7 @@
       "version": "v0.0.3",
       "revision": "86fcbddaf654aec40c6fe6a8293f627340331b0c",
       "url": "https://api.github.com/repos/0e4ef622/wine-discord-ipc-bridge/tarball/v0.0.3",
-      "hash": "1a24nvwv2r8bwkwf7i23a36cdizkyj2ql9fk8hxd940slcw1nfwg"
+      "hash": "sha256-jzsbOKMakNQ6RNMlioX088fGzFBDxOP45Atlsfm2RKg="
     },
     "wine-mono": {
       "type": "GitRelease",
@@ -200,7 +197,7 @@
       "version": "wine-mono-10.1.0",
       "revision": "6b762029248bdcebf998b9d57d4014cd2661e812",
       "url": "https://api.github.com/repos/wine-mono/wine-mono/tarball/wine-mono-10.1.0",
-      "hash": "0kvp5b6j3gvjq8nrhxvx4i35qy04b8nqivjmqq3vjn71wf9lh6jj"
+      "hash": "sha256-UhpIk+PhWLkHxlXuiC1aBHhcRiR9d5gtwnK/Ic0qd08="
     },
     "wine-tkg": {
       "type": "Git",
@@ -211,9 +208,9 @@
       },
       "branch": "makepkg",
       "submodules": false,
-      "revision": "ce540af253c5a7cf49d59b0b6ad4976aba6e25a3",
-      "url": "https://github.com/h0st-space/wine-tkg-git/archive/ce540af253c5a7cf49d59b0b6ad4976aba6e25a3.tar.gz",
-      "hash": "sha256-UUznBpIJ1V3sMb0fpbjXD2AayBbO3EtT06Ky1b5Drck="
+      "revision": "45c387f0e755d6289f3e7eaf2e5da2cde1ae6fd1",
+      "url": "https://github.com/h0st-space/wine-tkg-git/archive/45c387f0e755d6289f3e7eaf2e5da2cde1ae6fd1.tar.gz",
+      "hash": "sha256-P/pxR1WnRlChm7VOootYfRiSczzgH8TCGIdPMi5zGew="
     },
     "winetricks": {
       "type": "Git",
@@ -226,8 +223,8 @@
       "submodules": false,
       "revision": "b0806382da3b63e529d8513ccdfeef1afdba76ff",
       "url": "https://github.com/winetricks/winetricks/archive/b0806382da3b63e529d8513ccdfeef1afdba76ff.tar.gz",
-      "hash": "1q8bbqasnwl5gwn3b6ginqrjqqlmihjzxshxvfp7g1mq0jl2jzyj"
+      "hash": "sha256-0n8pqAS4hneu2x3q/iWMlWIsM7bxmTUsf4VyqxVeC+E="
     }
   },
-  "version": 5
+  "version": 6
 }
