@@ -41,9 +41,9 @@
       },
       "branch": "master",
       "submodules": true,
-      "revision": "e2373f9421f2c70583aea75c54219fbdcd67959c",
+      "revision": "daed0c1ce8d39e6dcc1580b753554deb7fcbd2ae",
       "url": null,
-      "hash": "sha256-nZEi9WYhpI0WaeguoZMV4nt+nfaErvgz5RNDyyZYCJA=",
+      "hash": "sha256-OaQ8ymvg//Asfs3xxc4SksW755UQmqt/vUZ+sVve9zc=",
       "frozen": true
     },
     "dxvk-gplasync": {
@@ -221,9 +221,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "b0806382da3b63e529d8513ccdfeef1afdba76ff",
-      "url": "https://github.com/winetricks/winetricks/archive/b0806382da3b63e529d8513ccdfeef1afdba76ff.tar.gz",
-      "hash": "sha256-0n8pqAS4hneu2x3q/iWMlWIsM7bxmTUsf4VyqxVeC+E="
+      "revision": "5eed63521781ffc2f0c4bbee7ec9e215b13a1243",
+      "url": "https://github.com/winetricks/winetricks/archive/5eed63521781ffc2f0c4bbee7ec9e215b13a1243.tar.gz",
+      "hash": "sha256-thEL36C2I/l4R5YAyfVg9H3FttsslVRK06Y8rPg+7Do="
     }
   },
   "version": 6
