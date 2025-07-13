@@ -10,6 +10,7 @@
   pins,
   # cross compile inputs:
   SDL2,
+  sdl3,
   windows,
   stdenv,
 }: let
@@ -28,7 +29,7 @@ in
 
     buildInputs =
       lib.optionals stdenv.targetPlatform.isWindows [windows.pthreads]
-      ++ lib.optionals stdenv.targetPlatform.isLinux [SDL2];
+      ++ lib.optionals stdenv.targetPlatform.isLinux [SDL2 sdl3];
 
     postPatch = ''
       patchShebangs ./
