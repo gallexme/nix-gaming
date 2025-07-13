@@ -40,6 +40,8 @@
         "repo": "dxvk"
       },
       "branch": "master",
+      "version": "v2.7",
+
       "submodules": true,
       "revision": "daed0c1ce8d39e6dcc1580b753554deb7fcbd2ae",
       "url": null,
