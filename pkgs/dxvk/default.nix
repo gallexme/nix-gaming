@@ -8,6 +8,8 @@
   glslang,
   python3,
   pins,
+  glfw,
+  pkg-config,
   # cross compile inputs:
   SDL2,
   sdl3,
@@ -29,7 +31,7 @@ in
 
     buildInputs =
       lib.optionals stdenv.targetPlatform.isWindows [windows.pthreads]
-      ++ lib.optionals stdenv.targetPlatform.isLinux [SDL2 sdl3];
+      ++ lib.optionals stdenv.targetPlatform.isLinux [SDL2 sdl3 glfw];
 
     postPatch = ''
       patchShebangs ./
@@ -37,6 +39,7 @@ in
 
     depsBuildBuild = [
       meson
+      pkg-config
       ninja
       glslang
     ];
@@ -46,7 +49,7 @@ in
       (dxvk-gplasync + "/patches/global-dxvk.conf.patch")
     ];
 
-    mesonFlags = ["--buildtype=release"];
+    mesonFlags = ["--buildtype=release -Dnative_glfw=disabled"];
 
     src = dxvk;
 
