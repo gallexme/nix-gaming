@@ -20,7 +20,7 @@
 in
   stdenv.mkDerivation {
     name = "dxvk";
-    inherit (dxvk) version;
+    version = "dev";
 
     enableParallelBuilding = true;
     separateDebugInfo = true;
