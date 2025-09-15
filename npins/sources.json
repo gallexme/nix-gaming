@@ -40,8 +40,6 @@
         "repo": "dxvk"
       },
       "branch": "master",
-      "version": "v2.7",
-
       "submodules": true,
       "revision": "daed0c1ce8d39e6dcc1580b753554deb7fcbd2ae",
       "url": null,
@@ -210,9 +208,9 @@
       },
       "branch": "makepkg",
       "submodules": false,
-      "revision": "45c387f0e755d6289f3e7eaf2e5da2cde1ae6fd1",
-      "url": "https://github.com/h0st-space/wine-tkg-git/archive/45c387f0e755d6289f3e7eaf2e5da2cde1ae6fd1.tar.gz",
-      "hash": "sha256-P/pxR1WnRlChm7VOootYfRiSczzgH8TCGIdPMi5zGew="
+      "revision": "8c09c571ac70bfb5b31b6c2775d1214dafa5c144",
+      "url": "https://github.com/h0st-space/wine-tkg-git/archive/8c09c571ac70bfb5b31b6c2775d1214dafa5c144.tar.gz",
+      "hash": "sha256-gVjrlMb0ulgCDv1g/I0mIP1gG2cypAxgaP0iWTIUuxc="
     },
     "winetricks": {
       "type": "Git",
