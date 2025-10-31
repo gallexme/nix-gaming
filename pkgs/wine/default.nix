@@ -9,10 +9,9 @@
   pkgsi686Linux,
   callPackage,
   fetchFromGitHub,
-  fetchurl,
+  replaceVars,
   moltenvk,
   supportFlags,
-  stdenv_32bit,
   overrideCC,
   wrapCCMulti,
   gcc13,
@@ -31,11 +30,14 @@
   };
 
   defaults = let
-    sources = (import "${inputs.nixpkgs}/pkgs/applications/emulators/wine/sources.nix" {inherit pkgs;}).unstable;
+    sources = (import "${nixpkgs-wine}/pkgs/applications/emulators/wine/sources.nix" {inherit pkgs;}).unstable;
   in {
     inherit supportFlags moltenvk;
     patches = [];
-    buildScript = "${nixpkgs-wine}/pkgs/applications/emulators/wine/builder-wow.sh";
+    buildScript = replaceVars "${nixpkgs-wine}/pkgs/applications/emulators/wine/builder-wow.sh" {
+      pkgconfig64remove = lib.makeSearchPathOutput "dev" "lib/pkgconfig" [pkgs.glib pkgs.gst_all_1.gstreamer];
+    };
+    configureFlags = ["--disable-tests"];
     geckos = with sources; [gecko32 gecko64];
     mingwGccs = with pkgsCross; [mingw32.buildPackages.gcc13 mingwW64.buildPackages.gcc13];
     monos = with sources; [mono];
@@ -43,8 +45,18 @@
     platforms = ["x86_64-linux"];
     stdenv = overrideCC stdenv (wrapCCMulti gcc13);
     wineRelease = "unstable";
+    mainProgram = "wine64";
   };
-
+  # defaults for newer WoW64 builds
+  defaultsWow64 = lib.recursiveUpdate defaults {
+    buildScript = null;
+    configureFlags = ["--disable-tests" "--enable-archs=x86_64,i386"];
+    mingwGccs = with pkgsCross; [mingw32.buildPackages.gcc mingwW64.buildPackages.gcc];
+    monos = [wine-mono];
+    pkgArches = [pkgs];
+    inherit stdenv;
+    mainProgram = "wine";
+  };
   pnameGen = n: n + lib.optionalString (build == "full") "-full";
 in {
   wine-ge = (callPackage "${nixpkgs-wine}/pkgs/applications/emulators/wine/base.nix" (defaults
@@ -57,43 +69,42 @@ in {
     meta = old.meta // {passthru.updateScript = ./update-wine-ge.sh;};
   });
 
-  wine-tkg =
-    (callPackage "${nixpkgs-wine}/pkgs/applications/emulators/wine/base.nix"
-      (lib.recursiveUpdate defaults
-        rec {
-          pname = pnameGen "wine-tkg";
-          version = lib.removeSuffix "\n" (lib.removePrefix "Wine version " (builtins.readFile "${src}/VERSION"));
-          src = pins.wine-tkg;
-        }))
+  wine-tkg = (callPackage "${nixpkgs-wine}/pkgs/applications/emulators/wine/base.nix"
+    (lib.recursiveUpdate defaultsWow64
+      rec {
+        pname = pnameGen "wine-tkg";
+        version = lib.removeSuffix "\n" (lib.removePrefix "Wine version " (builtins.readFile "${src}/VERSION"));
+        src = pins.wine-tkg;
+      }))
     .overrideDerivation (
-      old: {
-        postPatch = ''
+    old: {
+      postPatch = ''
+        # set -x
+        sed -i -e 's/-O2/-O2 -march=alderlake -mtune=alderlake -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types -g2 /g' configure
+          # export LDFLAGS='-Wl,-O4,--sort-common,--as-needed'
+          # export CFLAGS='-O4 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
+          # export CXXFLAGS='-O4 -vftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
+          # export CPPFLAGS='-O4 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
+
+          # export configureFlagsArray=CXXFLAGS=\"-O4\ -ftree-vectorize\ -Wno-error=implicit-function-declaration\ -Wno-error=incompatible-pointer-types\"
+
           # set -x
-          sed -i -e 's/-O2/-O2 -march=alderlake -mtune=alderlake -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types -g2 /g' configure
-            # export LDFLAGS='-Wl,-O4,--sort-common,--as-needed'
-            # export CFLAGS='-O4 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
-            # export CXXFLAGS='-O4 -vftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
-            # export CPPFLAGS='-O4 -ftree-vectorize -Wno-error=implicit-function-declaration -Wno-error=incompatible-pointer-types'
+          # printenv
+      '';
+      # # configureFlags = [''CFLAGS= $CFLAGS''];
 
-            # export configureFlagsArray=CXXFLAGS=\"-O4\ -ftree-vectorize\ -Wno-error=implicit-function-declaration\ -Wno-error=incompatible-pointer-types\"
-
-            # set -x
-            # printenv
-        '';
-        # # configureFlags = [''CFLAGS= $CFLAGS''];
-
-        # NIX_CXXFLAGS_COMPILE = ["-O0"];
-        NIX_CFLAGS_COMPILE = let
-          headers = pkgs.makeLinuxHeaders {
-            inherit (pkgs.linuxKernel.kernels.linux_zen) src version patches;
-          };
-        in [
-          "-I${headers}/include"
-          "-O2"
-        ];
-        buildInputs = with pkgs; [] ++ old.buildInputs;
-      }
-    );
+      # NIX_CXXFLAGS_COMPILE = ["-O0"];
+      NIX_CFLAGS_COMPILE = let
+        headers = pkgs.makeLinuxHeaders {
+          inherit (pkgs.linuxKernel.kernels.linux_zen) src version patches;
+        };
+      in [
+        "-I${headers}/include"
+        "-O2"
+      ];
+      buildInputs = with pkgs; [] ++ old.buildInputs;
+    }
+  );
 
   wine-osu = let
     pname = pnameGen "wine-osu";

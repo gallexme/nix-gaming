@@ -16,21 +16,20 @@ rec {
     xineramaSupport = true;
     sdlSupport = true;
     mingwSupport = true;
-    gtkSupport = true;
-    gstreamerSupport = true;
-    openalSupport = true;
-    openclSupport = true;
-    odbcSupport = true;
-    netapiSupport = true;
-    vaSupport = true;
-    pcapSupport = true;
-    v4lSupport = true;
-    gphoto2Support = true;
-    krb5Support = true;
-    embedInstallers = true;
-    x11Support = true;
-    waylandSupport = true;
     usbSupport = true;
+    waylandSupport = false; # disabled for wine-osu (Wine 7.0 doesn't support Wayland)
+    x11Support = true;
+    gtkSupport = false;
+    gstreamerSupport = false;
+    openclSupport = false;
+    odbcSupport = false;
+    netapiSupport = false;
+    vaSupport = false;
+    pcapSupport = false;
+    v4lSupport = false;
+    gphoto2Support = false;
+    krb5Support = false;
+    embedInstallers = false;
   };
 
   full =
@@ -38,10 +37,11 @@ rec {
     // {
       gtkSupport = true;
       gstreamerSupport = true;
-      openalSupport = true;
+      # openalSupport = true;
       openclSupport = true;
       odbcSupport = true;
       netapiSupport = true;
+      krb5Support = true;
       vaSupport = true;
       pcapSupport = true;
       v4lSupport = true;
