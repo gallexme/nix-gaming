@@ -1,6 +1,7 @@
 rec {
   base = {
     gettextSupport = true;
+    ffmpegSupport = true;
     fontconfigSupport = true;
     alsaSupport = true;
     openglSupport = true;
