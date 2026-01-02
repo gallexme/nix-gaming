@@ -33,17 +33,20 @@
       "hash": "sha256-3piRooMfBajy2KtypggYoa+JICVvLEs20dLq8Vc+MEo="
     },
     "dxvk": {
-      "type": "Git",
+      "type": "GitRelease",
       "repository": {
         "type": "GitHub",
         "owner": "doitsujin",
         "repo": "dxvk"
       },
-      "branch": "master",
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
       "submodules": true,
-      "revision": "e9ad90562cf4f785f33038bd27bc8c58f5222008",
+      "version": "v2.7.1",
+      "revision": "ab3631f80d9cd493676d4342bf614028c72e7484",
       "url": null,
-      "hash": "sha256-teXU8+/rTveIqOmNIRQUIVsvgIReHz9i6tUd5yW8FW8=",
+      "hash": "sha256-c4QlFCUH5SdXT4J3jTGQBAgFXFD8waTjvLUePLAdpFs=",
       "frozen": true
     },
     "dxvk-gplasync": {
