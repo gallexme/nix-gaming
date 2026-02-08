@@ -44,7 +44,7 @@
     pkgArches = [pkgs pkgsi686Linux];
     platforms = ["x86_64-linux"];
     stdenv = overrideCC stdenv (wrapCCMulti gcc13);
-    wineRelease = "unstable";
+    # wineRelease = "unstable";
     mainProgram = "wine64";
   };
   # defaults for newer WoW64 builds
