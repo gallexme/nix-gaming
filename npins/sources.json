@@ -197,10 +197,10 @@
       "version_upper_bound": null,
       "release_prefix": "wine-mono-",
       "submodules": false,
-      "version": "wine-mono-11.0.0",
-      "revision": "1f1a5d53f4679f6b88801021aae142ca048e2d17",
-      "url": "https://api.github.com/repos/wine-mono/wine-mono/tarball/refs/tags/wine-mono-11.0.0",
-      "hash": "sha256-D7MLyMUR4uEpB3laa+kgGQlS6ItsZTwjP2V1Mo5KYDY="
+      "version": "wine-mono-10.4.1",
+      "revision": "3d88de5a953c29f6f525c8b8d378d820bfffd751",
+      "url": "https://api.github.com/repos/wine-mono/wine-mono/tarball/refs/tags/wine-mono-10.4.1",
+      "hash": "sha256-mstM0gESPPRBjQwG9vlUT79DhMO4qqDGxKn9KqJlIBg="
     },
     "wine-tkg": {
       "type": "Git",
