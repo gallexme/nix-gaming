@@ -1,5 +1,4 @@
 {
-  inputs,
   self,
   pins,
   lib,
@@ -17,36 +16,56 @@
   gcc13,
   stdenv,
   wine-mono,
+  # inputs,
+  # self,
+  # pins,
+  # lib,
+  # build,
+  # pkgs,
+  # pkgsCross,
+  # pkgsi686Linux,
+  # callPackage,
+  # fetchFromGitHub,
+  # replaceVars,
+  # moltenvk,
+  # supportFlags,
+  # overrideCC,
+  # wrapCCMulti,
+  # gcc13,
+  # stdenv,
+  # wine-mono,
 }: let
-  nixpkgs-wine = builtins.path {
-    path = inputs.nixpkgs;
-    name = "source";
-    filter = path: type: let
-      wineDir = "${inputs.nixpkgs}/pkgs/applications/emulators/wine/";
-    in (
-      (type == "directory" && (lib.hasPrefix path wineDir))
-      || (type != "directory" && (lib.hasPrefix wineDir path))
-    );
-  };
-
+  # nixpkgs-wine = builtins.path {
+  #   path = pkgs.path;
+  #   name = "source";
+  #   filter = path: type: let
+  #     wineDir = "${pkgs.pathvector}/pkgs/applications/emulators/wine/";
+  #   in (
+  #     (type == "directory" && (lib.hasPrefix path wineDir))
+  #     || (type != "directory" && (lib.hasPrefix wineDir path))
+  #   );
+  # };
+  nixpkgs-wine = pkgs.path;
   defaults = let
     sources = (import "${nixpkgs-wine}/pkgs/applications/emulators/wine/sources.nix" {inherit pkgs;}).unstable;
-  in {
-    inherit supportFlags moltenvk;
-    patches = [];
-    buildScript = replaceVars "${nixpkgs-wine}/pkgs/applications/emulators/wine/builder-wow.sh" {
-      pkgconfig64remove = lib.makeSearchPathOutput "dev" "lib/pkgconfig" [pkgs.glib pkgs.gst_all_1.gstreamer];
+  in
+    supportFlags
+    // {
+      inherit moltenvk;
+      patches = [];
+      buildScript = replaceVars "${nixpkgs-wine}/pkgs/applications/emulators/wine/builder-wow.sh" {
+        pkgconfig64remove = lib.makeSearchPathOutput "dev" "lib/pkgconfig" [pkgs.glib pkgs.gst_all_1.gstreamer];
+      };
+      configureFlags = ["--disable-tests"];
+      geckos = with sources; [gecko32 gecko64];
+      mingwGccs = with pkgsCross; [mingw32.buildPackages.gcc13 mingwW64.buildPackages.gcc13];
+      monos = with sources; [mono];
+      pkgArches = [pkgs pkgsi686Linux];
+      platforms = ["x86_64-linux"];
+      stdenv = overrideCC stdenv (wrapCCMulti gcc13);
+      # wineRelease = "unstable";
+      mainProgram = "wine64";
     };
-    configureFlags = ["--disable-tests"];
-    geckos = with sources; [gecko32 gecko64];
-    mingwGccs = with pkgsCross; [mingw32.buildPackages.gcc13 mingwW64.buildPackages.gcc13];
-    monos = with sources; [mono];
-    pkgArches = [pkgs pkgsi686Linux];
-    platforms = ["x86_64-linux"];
-    stdenv = overrideCC stdenv (wrapCCMulti gcc13);
-    # wineRelease = "unstable";
-    mainProgram = "wine64";
-  };
   # defaults for newer WoW64 builds
   defaultsWow64 = lib.recursiveUpdate defaults {
     buildScript = null;

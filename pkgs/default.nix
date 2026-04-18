@@ -25,14 +25,31 @@
 
       wine-mono = pkgs.callPackage ./wine-mono {inherit pins;};
 
+      # wineBuilder = wine: build: extra:
+      #   (import ./wine ({
+      #       inherit inputs self pkgs build pins wine-mono;
+      #       inherit (pkgs) callPackage fetchFromGitHub replaceVars lib moltenvk pkgsCross pkgsi686Linux stdenv wrapCCMulti overrideCC gcc13;
+      #       supportFlags = (import ./wine/supportFlags.nix).${build};
+      #     }
+      #     // extra))
+      #   .${
+      #     wine
+      #   };
+      #
       wineBuilder = wine: build: extra:
-        (import ./wine ({
-            inherit inputs self pkgs build pins wine-mono;
-            inherit (pkgs) callPackage fetchFromGitHub replaceVars lib moltenvk pkgsCross pkgsi686Linux stdenv wrapCCMulti overrideCC gcc13;
+        (pkgs.callPackage ./wine (
+          {
+            inherit
+              self
+              pkgs
+              build
+              pins
+              wine-mono
+              ;
             supportFlags = (import ./wine/supportFlags.nix).${build};
           }
-          // extra))
-        .${
+          // extra
+        )).${
           wine
         };
     in {
