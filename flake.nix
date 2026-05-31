@@ -2,7 +2,7 @@
   description = "Gaming on Nix";
 
   inputs = {
-    nixpkgs.url = "github:NixOs/nixpkgs/nixos-25.11-small";
+    nixpkgs.url = "github:NixOs/nixpkgs/nixos-26.05-small";
 
     chaotic.url = "github:chaotic-cx/nyx/nyxpkgs-unstable";
 
